@@ -16,17 +16,22 @@ public class KnightBoard{
     public boolean solve(){
 	int i = 0;
 	boolean solved = false;
-	while (i < board.length and !solved){
+	while (i < board.length && !solved){
 	    int j = -1;
 	    while (j < board.length && !solved){
 		j++;
-		solved = solveTour(i, j, 2);
+		solved = solveTour(i, j, 1);
 	    }
 	}
+	return solved;
     }
 
+    public boolean isSafe(int row, int col){
+	return ((row >= 0 && row < board.length) && (col >= 0 && col < board.length) && (board[row][col] == -1));
+    }
+    
     public boolean solveTour(int row, int col, int moves){
-	if (moves == 2){
+	if (moves == 1){
 	    board[row][col] = 1;
 	}	
 	if (moves > board.length * board.length){
@@ -65,6 +70,7 @@ public class KnightBoard{
 		}
 		result += " ";
 	    }
+	    result += "\n";
 	}
     }
 }
