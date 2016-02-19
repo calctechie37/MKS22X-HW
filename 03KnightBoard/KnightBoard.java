@@ -72,5 +72,6 @@ public class KnightBoard{
 	    }
 	    result += "\n";
 	}
+	System.out.println(result);
     }
 }
