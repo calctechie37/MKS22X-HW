@@ -34,7 +34,7 @@ public class KnightBoard{
 	if (moves == 1){
 	    board[row][col] = 1;
 	}	
-	if (moves > board.length * board.length){
+	if (moves > board.length * board[0].length){
 	    return true;
 	}
 	for(int i = 0; i < movesx.length; i++){
