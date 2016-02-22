@@ -4,10 +4,10 @@ public class KnightBoard{
     private int[] movesx = {2, 1, -1, -2, -2, -1, 1, 2};
     private int[] movesy = {1, 2, 2, 1, -1, -2, -2, -1};
     
-    public KnightBoard(int size){
-	board = new int[size][size];
+    public KnightBoard(int rows, int cols){
+	board = new int[rows][cols];
 	for(int i = 0; i < board.length; i++){
-	    for(int j = 0; j < board.length; j++){
+	    for(int j = 0; j < board[0].length; j++){
 		board[i][j] = 0;
 	    }
 	}
@@ -18,7 +18,7 @@ public class KnightBoard{
 	boolean solved = false;
 	while (i < board.length && !solved){
 	    int j = -1;
-	    while (j < board.length && !solved){
+	    while (j < board[0].length && !solved){
 		j++;
 		solved = solveTour(i, j, 1);
 	    }
@@ -27,7 +27,7 @@ public class KnightBoard{
     }
 
     public boolean isSafe(int row, int col){
-	return ((row >= 0 && row < board.length) && (col >= 0 && col < board.length) && (board[row][col] == -1));
+	return ((row >= 0 && row < board.length) && (col >= 0 && col < board[0].length) && (board[row][col] == -1));
     }
     
     public boolean solveTour(int row, int col, int moves){
@@ -52,7 +52,7 @@ public class KnightBoard{
 	    }
 	}
 	for(int i = 0; i < board.length; i++){
-	    for(int j = 0; j < board.length; j++){
+	    for(int j = 0; j < board[0].length; j++){
 		board[i][j] = 0;
 	    }
 	}
@@ -62,7 +62,7 @@ public class KnightBoard{
     public void printSolution(){
 	String result = "";
 	for(int i = 0; i < board.length; i++){
-	    for(int j = 0; j < board.length; j++){
+	    for(int j = 0; j < board[0].length; j++){
 		if (board[i][j] < 10){
 		    result += " " + board[i][j];
 		} else{
