@@ -27,7 +27,7 @@ public class Bronze{
 		stomp(pasture, row - 1, col - 1, depressBy);
 	    }
 	    
-	    System.out.println(findVolume(pasture, waterElevation) * 72 * 72);
+	    System.out.println(findVolume(pasture, waterElevation) * 72 * 72 + ",7,Chan,Patrick");
 	}catch (FileNotFoundException e){
 	    System.out.println("File not found!");
 	}
@@ -35,10 +35,10 @@ public class Bronze{
     
     public static void stomp(int[][] pasture, int row, int col, int stompDepth){
 	int max = pasture[row][col];
-	for(int r = row; r < pasture.length && r < row + 3; r++){
-	    for(int c = col; c < pasture[0].length && c < col + 3; c++){
-		if(pasture[r][c] > max){
-		    max = pasture[r][c];
+	for(int r = 0; r < 3; r++){
+	    for(int c = 0; c < 3; c++){
+		if(pasture[row + r][col + c] > max){
+		    max = pasture[row + r][col + c];
 		}
 	    }
 	}
