@@ -15,8 +15,7 @@ public class QueenBoard{
 	    printSolution();
 	    return true;
 	}
-	int row = 0;
-	while (row < board.length){
+	for(int row = 0; row < board.length; row++){
 	    if (addQueen(row, col)){
 		if (solveHelper(col + 1)){
 		    return true;
@@ -24,10 +23,6 @@ public class QueenBoard{
 		    removeQueen(row, col);
 		}
 	    }
-	    row++;
-	}
-	if (col == 0){
-	    printSolution();
 	}
 	return false;
     }
@@ -96,7 +91,7 @@ public class QueenBoard{
     }
 
     public static void main(String[]args){
-	QueenBoard q = new QueenBoard(5);
+	QueenBoard q = new QueenBoard(4);
 	System.out.println(q.solve());
     }
 }
