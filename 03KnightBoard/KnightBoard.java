@@ -13,49 +13,41 @@ public class KnightBoard{
 	}
     }
 
-    public boolean solve(){
-	int i = 0;
-	boolean solved = false;
-	while (i < board.length && !solved){
-	    int j = -1;
-	    while (j < board[0].length && !solved){
-		j++;
-		solved = solveTour(i, j, 1);
-	    }
-	}
-	return solved;
+    public KnightBoard(int size){
+	this(size, size);
+	
     }
 
-    public boolean isSafe(int row, int col){
-	return ((row >= 0 && row < board.length) && (col >= 0 && col < board[0].length) && (board[row][col] == -1));
-    }
-    
-    public boolean solveTour(int row, int col, int moves){
-	if (moves == 1){
-	    board[row][col] = 1;
-	}	
-	if (moves > board.length * board[0].length){
-	    return true;
-	}
-	for(int i = 0; i < movesx.length; i++){
-	    int nextrow = row + movesx[i];
-	    int nextcol = col + movesy[i];
-	    if (isSafe(nextrow, nextcol)){
-		board[nextrow][nextcol] = moves;
-		moves++;
-		if (solveTour(nextrow, nextcol, moves)){
+    public boolean solve(){
+	for(int i = 0; i < board.length; i++){
+	    for(int j = 0; j < board[0].length; j++){
+		if (solveTour(i, j, 1)){
 		    return true;
-		} else{
-		    board[nextrow][nextcol] = 0;
-		    moves--;
 		}
 	    }
 	}
-	for(int i = 0; i < board.length; i++){
-	    for(int j = 0; j < board[0].length; j++){
-		board[i][j] = 0;
+	return false;
+    }
+
+    public boolean isSafe(int row, int col){
+	return ((row >= 0 && row < board.length) && (col >= 0 && col < board[0].length) && (board[row][col] == 0));
+    }
+    
+    public boolean solveTour(int row, int col, int moves){
+	if (!isSafe(row, col)){
+	    return false;
+	}
+	board[row][col] = moves;
+	
+	if (moves == board.length * board[0].length){
+	    return true;
+	}
+	for(int i = 0; i < 8; i++){
+	    if (solveTour(row + movesx[i], col + movesy[i], moves + 1)){
+		return true;
 	    }
 	}
+	board[row][col] = 0;
 	return false;
     }
     
