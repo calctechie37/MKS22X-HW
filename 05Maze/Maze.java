@@ -5,7 +5,7 @@ public class Maze{
 
 
     private char[][]maze;
-    private int startx,starty;
+    private int startx, starty;
     private boolean animate;
 
     /*Constructor loads a maze text file.
@@ -23,10 +23,32 @@ public class Maze{
 	File infofile = new File(filename);
 	
 	try{
+	    startx = -1;
 	    Scanner in = new Scanner(infofile);
-	    
+	    String lines = "";
+	    int rows = 0;
+	    int cols = 0;
+	    while (in.hasNextLine()){
+		lines += in.nextLine().trim();
+		rows++;
+		if (rows == 1){
+		    cols = lines.length();
+		}
+	    }
+	    System.out.println(rows + " " + cols);
+	    maze = new char[rows][cols];
+	    for(int i = 0; i < lines.length(); i++){
+		char c = lines.charAt(i);
+		maze[i % rows][i / rows] = c;
+		String ele = "" + maze[i % rows][i / rows];
+		if (ele.equalsIgnoreCase("s")){
+		    startx = i % rows;
+		    starty = i / rows;
+		}
+	    }
 	}catch (FileNotFoundException e){
 	    System.out.println("File not found!");
+	    System.exit(0);
 	}
         //COMPLETE CONSTRUCTOR
     }
@@ -39,7 +61,7 @@ public class Maze{
     */
     public boolean solve(){
         if(startx < 0){
-            System.out.println("No starting point 'S' found in maze.");
+	    System.out.println("No starting point 'S' or 's' found in the maze.");
             return false;
         }else{
             maze[startx][starty] = ' ';
@@ -66,9 +88,20 @@ public class Maze{
             System.out.println(this);
             wait(20);
         }
-
+	String ele = "" + maze[x][y];
         //COMPLETE SOLVE
-
+	if (maze[x][y] == '#' || maze[x][y] == '.'){
+	    return false;
+	}else if (maze[x][y] == ' '){
+	    maze[x][y] = '@';
+	    if (solve(x - 1, y) || solve(x, y - 1) ||
+		solve(x, y + 1) || solve(x + 1, y)){
+		return true;
+	    }
+	    maze[x][y] = '.';
+	}else if (ele.equalsIgnoreCase("e")){
+	    return true;
+	}
         return false; //so it compiles
     }
 
