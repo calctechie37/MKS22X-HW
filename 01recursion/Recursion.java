@@ -7,6 +7,12 @@ public class Recursion{
     }
 
     public double sqrt(double n){
+	if (n < 0){
+	    throw new IllegalArgumentException();
+	}
+	if (n == 0){
+	    return 0.0;
+	}
 	return sqrtHelper(n, n / 3.0);
     }
 

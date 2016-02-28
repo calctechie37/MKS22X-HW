@@ -6,6 +6,10 @@ public class Main{
 	System.out.println(r1.name());
 	System.out.println("Testing sqrt of 100...");
 	System.out.println(r1.sqrt(100));
+	System.out.println("Testing sqrt of 0...");
+	System.out.println(r1.sqrt(0));
+	System.out.println("Testing sqrt of -100...");
+	System.out.println(r1.sqrt(-100));
     }
 }
 	    
