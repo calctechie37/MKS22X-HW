@@ -2,67 +2,80 @@ import java.util.*;
 import java.io.*;
 
 public class Silver{
-    String[][] pasture;
-    int N, M, T;
-    int R1, C1, R2, C2;
+
+    public char[][]pasture;
+    public int solution;
+    public int time;
+    public int[] start;
+    public int[] end;
     
     public Silver(){
-	File infofile = new File("ctravel.in");
 	try{
+	    File infofile = new File("ctravel.in");
 	    Scanner in = new Scanner(infofile);
-	    int line = 0;
+
+	    ArrayList<String> lines = new ArrayList<String>();
+
 	    while (in.hasNextLine()){
-		String text = in.nextLine();
-		if (line == 0){
-		    String[] line0 = text.split(" ");
-		    N = Integer.parseInt(line0[0]);
-		    M = Integer.parseInt(line0[1]);
-		    T = Integer.parseInt(line0[2]);
-		    pasture = new String[N][M];
-		}
-		if (line > 0 && line < N + 1){
-		    String[] pastureRow = text.split("");
-		    for(int col = 0; col < M; col++){
-			pasture[line - 1][col] = pastureRow[col];
-		    }
-		}
-		
-		if (line == N + 1){
-		    String[] startEnd = text.split(" ");
-		    R1 = Integer.parseInt(startEnd[0]);
-		    C1 = Integer.parseInt(startEnd[1]);
-		    R2 = Integer.parseInt(startEnd[2]);
-		    C2 = Integer.parseInt(startEnd[3]);
-		}
-		line++;
+		String line = in.nextLine();
+		lines.add(line.toUpperCase());
 	    }
+	    
+	    String[] data = lines.get(0).split(" ");
+	    int N = Integer.parseInt(data[0]);
+	    int M = Integer.parseInt(data[1]);
+	    time = Integer.parseInt(data[2]);
+	    pasture = new char[N][M];
+
+	    for(int i = 0; i < N; ++i){
+		String line = lines.get(i + 1);
+		
+		for(int j = 0; j < M; ++j){
+		    pasture[i][j] = line.charAt(j);
+		}
+	    }
+
+	    String[] L = lines.get(N + 1).split(" ");
+	    start = new int[]{Integer.parseInt(L[0]) - 1, Integer.parseInt(L[1]) - 1};
+	    end = new int[]{Integer.parseInt(L[2]) - 1, Integer.parseInt(L[3]) - 1};
+	    solution = 0;
 	}catch (FileNotFoundException e){
-	    System.out.println("File not Found!");
+	    System.out.println("Unable to find file!");
 	    System.exit(0);
 	}
+
+	
     }
 
-    public int solution(){
-	return travel(R1 - 1, C1 - 1, T);
+    public int solve(){
+	solve(start, end, time);
+	return solution;
     }
 
-    public int travel(int row, int col, int time){
-	if (row < 0 || row >= N || col < 0 || col >= M || time < 0){
-	    return 0;
-	}else if (time == 0 && row == R2 - 1 && col == C2 - 1){
-	    return 1;
-	}else if (pasture[row][col] == "*"){
-	    return 0;
+    public void solve(int[] s, int[] e, int t){
+	try{
+	    if (t == 0 && s[0] == e[0] && s[1] == e[1]){
+		solution++;
+		return;
+	    }
+	    if (pasture[s[0]][s[1]] == '*' || t == 0){
+		return;
+	    }
+	    
+	    int[] up = new int[]{s[0], s[1] - 1};
+	    int[] down = new int[]{s[0], s[1] + 1};
+	    int[] left = new int[]{s[0] - 1, s[1]};
+	    int[] right = new int[]{s[0] + 1, s[1]};
+	    solve(up, e, t - 1);
+	    solve(down, e, t - 1);
+	    solve(left, e, t - 1);
+	    solve(right, e, t - 1);
+	}catch (Exception ex){
 	}
-
-	return travel(row + 1, col, time - 1) + 
-	    travel(row - 1, col , time - 1) + 
-	    travel(row, col + 1, time - 1) + 
-	    travel(row, col - 1, time - 1);
     }
-
+	
     public static void main(String[]args){
 	Silver test = new Silver();
-	System.out.println(test.solution());
+	System.out.println(test.solve());
     }
 }
