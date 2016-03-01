@@ -20,10 +20,10 @@ public class Maze{
       3. When the file is not found, print an error and exit the program.
     */
     public Maze(String filename, boolean ani){
-	File infofile = new File(filename);
-	
 	try{
+	    animate = ani;
 	    startx = -1;
+	    File infofile = new File(filename);
 	    Scanner in = new Scanner(infofile);
 	    String lines = "";
 	    int rows = 0;
@@ -35,15 +35,15 @@ public class Maze{
 		    cols = lines.length();
 		}
 	    }
-	    System.out.println(rows + " " + cols);
 	    maze = new char[rows][cols];
-	    for(int i = 0; i < lines.length(); i++){
-		char c = lines.charAt(i);
-		maze[i % rows][i / rows] = c;
-		String ele = "" + maze[i % rows][i / rows];
-		if (ele.equalsIgnoreCase("s")){
-		    startx = i % rows;
-		    starty = i / rows;
+	    for(int i = 0; i < rows; i++){
+		for(int j = 0; j < cols; j++){
+		    maze[i][j] = lines.charAt(i * cols + j);
+		    String ele = "" + maze[i][j];
+		    if (ele.equalsIgnoreCase("s")){
+			startx = i;
+			starty = j;
+		    }
 		}
 	    }
 	}catch (FileNotFoundException e){
@@ -64,7 +64,7 @@ public class Maze{
 	    System.out.println("No starting point 'S' or 's' found in the maze.");
             return false;
         }else{
-            maze[startx][starty] = ' ';
+	    maze[startx][starty] = ' ';
             return solve(startx,starty);
         }
     }
@@ -116,8 +116,8 @@ public class Maze{
 
 
     public String toString(){
-        int maxx = maze.length;
-        int maxy = maze[0].length;
+        int maxx = maze[0].length;
+        int maxy = maze.length;
         String ans = "";
 
         if(animate){
@@ -129,7 +129,7 @@ public class Maze{
             if(i % maxx == 0 && i != 0){
                 ans += "\n";
             }
-            char c =  maze[i % maxx][i / maxx];
+            char c =  maze[i / maxx][i % maxx];
             if(c == '#'){
                 ans += color(38,47)+c;
             }else{
