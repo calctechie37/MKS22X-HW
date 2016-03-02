@@ -66,6 +66,7 @@ public class Silver{
 	    int[] down = new int[]{s[0], s[1] + 1};
 	    int[] left = new int[]{s[0] - 1, s[1]};
 	    int[] right = new int[]{s[0] + 1, s[1]};
+
 	    solve(up, e, t - 1);
 	    solve(down, e, t - 1);
 	    solve(left, e, t - 1);
