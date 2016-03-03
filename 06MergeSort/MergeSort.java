@@ -44,11 +44,18 @@ public class MergeSort{
 	return ans;
     }
 
-    public static int[] mergeSort(int[] x){
+    public static void mergeSort(int[] x){
+	int[] newArray = mergeSortH(x);
+	for(int i = 0; i < newArray.length; i++){
+	    x[i] = newArray[i];
+	}
+    }
+
+    public static int[] mergeSortH(int[] x){
 	if (x.length < 2){
 	    return x;
 	}
-	return merge(mergeSort(copyHalf(x, 1)), mergeSort(copyHalf(x, 2)));
+	return merge(mergeSortH(copyHalf(x, 1)), mergeSortH(copyHalf(x, 2)));
     }
 
     public static String toString(int[] a){
@@ -60,24 +67,20 @@ public class MergeSort{
     }
 
     public static void main(String[] args){
-	int n = 11;
+	int n;
+	if (args.length > 0){
+	    n = Integer.parseInt(args[0]);
+	} else{
+	    n = 1000000;
+	}
 	int [] a = new int[n];
 	Random r = new Random();
-	
-	System.out.println(toString(a));
 
 	for(int i = 0; i < n; i++){
-	    a[i] = r.nextInt(20) + 1;
+	    a[i] = r.nextInt(2000000) + 1;
 	}
 	
-	System.out.println(toString(a));
-
-	int type = Integer.parseInt(args[0]);
-	if (type == 0){
-	    Arrays.sort(a);
-	}else{
-	    a = mergeSort(a);
-	}
-	System.out.println(toString(a));
+	mergeSort(a);
+	System.out.println("Done");
     }
 }
