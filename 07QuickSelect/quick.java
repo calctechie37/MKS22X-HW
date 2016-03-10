@@ -2,41 +2,41 @@ import java.util.*;
 
 public class quick{
     
-    public static int QuickSelect(int[] data, int k){
-	return QuickSelect(data, 0, data.length - 1, k - 1);
+    public static int QuickSelectOld(int[] data, int k){
+	return QuickSelectOld(data, 0, data.length - 1, k - 1);
     }
 
-    public static void quickSort(int[] data){
-	quickSort(data, 0, data.length - 1);
+    public static void quickSortOld(int[] data){
+	quickSortOld(data, 0, data.length - 1);
     }
 
 
-    private static int QuickSelect(int[] data, int first, int last, int k) {
+    private static int QuickSelectOld(int[] data, int first, int last, int k) {
 	if (first <= last) {
 	    
-	    int pivot = partition(data, first, last);
+	    int pivot = partitionOld(data, first, last);
 
 	    if (k == pivot) {
 		return data[pivot];
 	    }
 	    if (k < pivot) {
-		return QuickSelect(data, first, pivot - 1, k);
+		return QuickSelectOld(data, first, pivot - 1, k);
 	    }
-	    return QuickSelect(data, pivot + 1, last, k);
+	    return QuickSelectOld(data, pivot + 1, last, k);
 	}
 	return Integer.MIN_VALUE;
     }
 
-    private static void quickSort(int[] data, int first, int last){
+    private static void quickSortOld(int[] data, int first, int last){
 	if (first <= last){
-	    int pivot = partition(data, first, last);
+	    int pivot = partitionOld(data, first, last);
 	    
-	    quickSort(data, first, pivot - 1);
-	    quickSort(data, pivot + 1, last);
+	    quickSortOld(data, first, pivot - 1);
+	    quickSortOld(data, pivot + 1, last);
 	}
     }
 
-    private static int partition(int[] data, int first, int last) {
+    private static int partitionOld(int[] data, int first, int last) {
 	int pivot = first + new Random().nextInt(last - first + 1);
 	int pivotValue = data[pivot];
 	swap(data, pivot, last);
@@ -57,7 +57,10 @@ public class quick{
     }
     
 
-    
+    public static String name(){
+	return "7, Chan, Patrick";
+    }
+
     public static void main(String[] args){
 	int n;
 	if (args.length > 0){
@@ -72,9 +75,9 @@ public class quick{
 	}
 	
 	System.out.println(Arrays.toString(a));
-	System.out.println(QuickSelect(a, 3));
+	System.out.println(QuickSelectOld(a, 3));
 	System.out.println(Arrays.toString(a));
-	quickSort(a);
+	quickSortOld(a);
 	System.out.println(Arrays.toString(a));
 	System.out.println(a[2]);
     }
