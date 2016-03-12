@@ -49,7 +49,59 @@ public class quick{
 	swap(data, first, last);
 	return first;
     }
- 
+    
+    public static void quickSort(int[] data){
+	quickSort(data, 0, data.length - 1);
+    }
+
+    private static void quickSort(int[] data, int first, int last){
+	if (first <= last){
+	    int[] bounds = partition(data, first, last);
+	    if  (bounds[0] > 0){
+		quickSort(data, first, bounds[0] - 1);
+	    }
+	    if (bounds[1] < data.length - 1){
+		quickSort(data, bounds[1] + 1, last);
+	    }
+	}
+    }
+
+    private static int[] partition(int[] data, int first, int last){
+	int lastCopy = last;
+	if (first == last){
+	    int[] bounds = {last, last};
+	    return bounds;
+	}
+	int pivot = (int)(Math.random() * (last - first + 1)) + first;
+	int value = data[pivot];
+	swap(data, pivot, last);
+	last--;
+	
+	int secondRight = -1;
+	while (first < last && (secondRight == -1) || secondRight > first){
+	    if (data[first] > value){
+		swap(data, first, last);
+		last--;
+	    }else if (data[first] < value){
+		first++;
+	    }else{
+		if (secondRight == -1){
+		    swap(data, first, last);
+		    secondRight = last;
+		}else{
+		    swap(data, first, --secondRight);
+		}
+	    }
+	}
+	if (data[last] < value){
+	    swap(data, ++last, lastCopy);
+	}else{
+	    swap(data, last, lastCopy);
+	}
+	int[] bounds = {first, last};
+	return bounds;
+    }
+
     private static void swap(int[] data, int x, int y) {
 	int tmp = data[x];
 	data[x] = data[y];
@@ -66,19 +118,19 @@ public class quick{
 	if (args.length > 0){
 	    n = Integer.parseInt(args[0]);
 	} else{
-	    n = 10;
+	    n = 100000000;
 	}
 	int [] a = new int[n];
 	Random r = new Random();
 	for(int i = 0; i < n; i++){
-	    a[i] = r.nextInt(2000000) - 1;
+	    a[i] = r.nextInt(3);//2000000) - 1;
 	}
 	
-	System.out.println(Arrays.toString(a));
-	System.out.println(QuickSelectOld(a, 3));
-	System.out.println(Arrays.toString(a));
-	quickSortOld(a);
-	System.out.println(Arrays.toString(a));
-	System.out.println(a[2]);
+	//System.out.println(Arrays.toString(a));
+	//System.out.println(QuickSelectOld(a, 3));
+	//System.out.println(Arrays.toString(a));
+	quickSort(a);
+	//System.out.println(Arrays.toString(a));
+	//System.out.println(a[2]);
     }
 }
