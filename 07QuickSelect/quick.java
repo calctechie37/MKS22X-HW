@@ -118,18 +118,20 @@ public class quick{
 	if (args.length > 0){
 	    n = Integer.parseInt(args[0]);
 	} else{
-	    n = 100000000;
+	    n = 4000000;
 	}
 	int [] a = new int[n];
 	Random r = new Random();
 	for(int i = 0; i < n; i++){
-	    a[i] = r.nextInt(3);//2000000) - 1;
+	    a[i] = r.nextInt(Integer.MAX_VALUE);//3);//2000000) - 1;
 	}
 	
 	//System.out.println(Arrays.toString(a));
 	//System.out.println(QuickSelectOld(a, 3));
 	//System.out.println(Arrays.toString(a));
-	quickSort(a);
+	Arrays.sort(a);
+	//quickSort(a);
+	//quickSortOld(a);
 	//System.out.println(Arrays.toString(a));
 	//System.out.println(a[2]);
     }
