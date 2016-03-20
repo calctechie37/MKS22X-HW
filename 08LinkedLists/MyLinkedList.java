@@ -1,10 +1,41 @@
 public class MyLinkedList{
+    
+    private class LNode{
+	private int value;
+	private LNode next;
 
+	public LNode(int v){
+	    setValue(v);
+	    setNext(null);
+	}
+
+	public LNode(int v, LNode n){
+	    setValue(v);
+	    setNext(n);
+	}
+
+	public void setValue(int v){
+	    value = v;
+	}
+
+	public void setNext(LNode n){
+	    next = n;
+	}
+
+	public int getValue(){
+	    return value;
+	}
+
+	public LNode getNext(){
+	    return next;
+	}
+    }
+    
     private LNode head;
     private LNode current;
     private LNode tail;
 
-    public int size = 1;
+    public int size;
 
     public MyLinkedList(LNode thead, LNode tcurrent){
 	setHead(thead);
@@ -168,5 +199,5 @@ public class MyLinkedList{
 	System.out.println(m.remove()); // 5
 	System.out.println(m.toString()); // [ 8, 1 ]
     }
-
+    
 }
