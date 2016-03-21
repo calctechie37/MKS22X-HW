@@ -1,43 +1,43 @@
-public class MyLinkedList{
+public class MyLinkedList<T>{
     
-    private class LNode{
-	private int value;
-	private LNode next;
+    private static class LNode<T>{
+	private T value;
+	private LNode<T> next;
 
-	public LNode(int v){
+	public LNode(T v){
 	    setValue(v);
 	    setNext(null);
 	}
 
-	public LNode(int v, LNode n){
+	public LNode(T v, LNode<T> n){
 	    setValue(v);
 	    setNext(n);
 	}
 
-	public void setValue(int v){
+	public void setValue(T v){
 	    value = v;
 	}
 
-	public void setNext(LNode n){
+	public void setNext(LNode<T> n){
 	    next = n;
 	}
 
-	public int getValue(){
+	public T getValue(){
 	    return value;
 	}
 
-	public LNode getNext(){
+	public LNode<T> getNext(){
 	    return next;
 	}
     }
     
-    private LNode head;
-    private LNode current;
-    private LNode tail;
+    private LNode<T> head;
+    private LNode<T> current;
+    private LNode<T> tail;
 
-    public int size;
+    public int size = 1;
 
-    public MyLinkedList(LNode thead, LNode tcurrent){
+    public MyLinkedList(LNode<T> thead, LNode<T> tcurrent){
 	setHead(thead);
 	setCurrent(tcurrent);
 	while(current.getNext() != null){
@@ -47,7 +47,7 @@ public class MyLinkedList{
 	setCurrent(tcurrent);
     }
 
-    public MyLinkedList(LNode thead){
+    public MyLinkedList(LNode<T> thead){
 	setHead(thead);
 	setCurrent(thead);
 	while (current.getNext() != null){
@@ -61,19 +61,19 @@ public class MyLinkedList{
 	return "7, Chan, Patrick";
     }
 
-    public void setHead(LNode thead){
+    public void setHead(LNode<T> thead){
 	head = thead;
     }
 
-    public LNode getHead(){
+    public LNode<T> getHead(){
 	return head;
     }
 
-    public void setCurrent(LNode tcurrent){
+    public void setCurrent(LNode<T> tcurrent){
 	current = tcurrent;
     }
 
-    public LNode getCurrent(){
+    public LNode<T> getCurrent(){
 	return current;
     }
 
@@ -84,15 +84,15 @@ public class MyLinkedList{
 	setTail(current);
     }
 
-    public void setTail(LNode t){
+    public void setTail(LNode<T> t){
 	tail = t;
     }
 
-    public LNode getTail(){
+    public LNode<T> getTail(){
 	return tail;
     }
 
-    public int get(int index){
+    public T get(int index){
 	setCurrent(head);
 	try{
 	    while(index > 0){
@@ -105,19 +105,19 @@ public class MyLinkedList{
 	}
     }
 
-    public boolean add(int value){
+    public boolean add(T value){
 	add(size, value);
 	return true;
     }
 
-    public void add(int index, int value){
+    public void add(int index, T value){
 	try{
 	    setCurrent(head);
 	    while (index > 1){
 		setCurrent(current.getNext());
 		index--;
 	    }
-	    current.setNext(new LNode(value,current.getNext()));
+	    current.setNext(new LNode<T>(value,current.getNext()));
 	    size++;
 	}catch (Exception e){
 	    throw new IndexOutOfBoundsException();
@@ -139,7 +139,7 @@ public class MyLinkedList{
 	return ans;
     }
 
-    public int indexOf(int value){
+    public int indexOf(T value){
 	int i = 0;
 	while (current.getNext().getValue() != value){
 	    if (current.getNext().getNext() == null && current.getValue() != value){
@@ -155,27 +155,25 @@ public class MyLinkedList{
 	return size;
     }
     
-    public int remove(){
+    public T remove(){
 	try {
 	    current = head.getNext();
-	    int hold = head.getValue();
+	    T hold = head.getValue();
 	    setHead(current);
 	    return hold;
-	} catch (Exception e){
-	    System.out.println("Element not found");
-	    System.exit(0);
+	} catch (IndexOutOfBoundsException e){
+	    throw new IndexOutOfBoundsException();
 	}
-	return -1;
     }
 
-    public int remove(int index){
+    public T remove(int index){
 	try {
 	    setCurrent(head);
 	    while (index > 1){
 		setCurrent(current.getNext());
 		index--;
 	    }
-	    int hold = current.getNext().getValue();
+	    T hold = current.getNext().getValue();
 	    current.getNext().setNext(current.getNext().getNext());
 	    size--;
 	    return hold;
@@ -185,10 +183,9 @@ public class MyLinkedList{
     }
 
     public static void main(String[]args){
-	LNode ln = new LNode(5);
-	MyLinkedList m = new MyLinkedList(ln);
+	LNode<Integer> ln = new LNode<Integer>(5);
+	MyLinkedList<Integer> m = new MyLinkedList<Integer>(ln);
 
-	System.out.println(ln.toString()); // [ 5 ]
 	System.out.println(m.toString()); // [ 5 ] 
 	m.add(1); 
 	System.out.println(m.toString()); // [ 5, 1 ]
