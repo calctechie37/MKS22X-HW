@@ -1,50 +1,50 @@
 import java.util.*;
 
-public class MyStack<T> {
+public class MyQueue<T> {
     private MyLinkedList<T> LinkedList;
 
-    public MyStack() {
-	LinkedList = new MyLinkedList<T>();
+    public MyQueue() {
+        LinkedList = new MyLinkedList<T>();
     }
 
     public static void main(String[] args) {
-	MyStack<Integer> ms = new MyStack<Integer>();
-	Stack<Integer> s = new Stack<Integer>();
+	MyQueue<Integer> mq = new MyQueue<Integer>();
+	PriorityQueue<Integer> q = new PriorityQueue<Integer>();
 	
 	// Test functions
 	int amount;
 	if (args.length > 0) {
 	    amount = Integer.parseInt(args[0]);
 	} else {
-	    amount = 1000000;
+	    amount = 2000000;
 	}
 	for (int i = 0; i < amount; i++) {
 	    int n = (int) (Math.random() * 10000);
-	    ms.push(i);
-	    s.push(i);
+	    mq.enqueue(i);
+	    q.add(i);
 	}
-	while (!s.empty() && s.size() == ms.size()) {
-	    if ( !(s.peek()).equals(ms.peek()) ) {
+	while (!q.isEmpty() && q.size() == mq.size()) {
+	    if ( !(q.peek()).equals(mq.peek()) ) {
 		System.out.println("Failed");
 		System.exit(0);
 	    }
-	    if ( !(s.pop()).equals(ms.pop()) ) {
+	    if ( !(q.remove()).equals(mq.dequeue()) ) {
 		System.out.println("Failed");
 		System.exit(0);
 	    }
 	}
-	if (ms.isEmpty()) {
+	if (mq.isEmpty()) {
 	    System.out.println("Success!");
 	} else {
 	    System.out.println("Not empty!");
 	}
     }
 
-    public void push(T item) {
-	LinkedList.add(0, item);
+    public void enqueue(T item) {
+	LinkedList.add(item);
     }
 
-    public T pop() {
+    public T dequeue() {
 	if (isEmpty()) {
 	    throw new NoSuchElementException();
 	}
@@ -62,7 +62,7 @@ public class MyStack<T> {
 	return LinkedList.size();
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
 	return size() == 0;
     }
 }
