@@ -6,7 +6,7 @@ public class Main{
 	} else {
 	    bm = new BetterMaze("data1.dat");
 	}
-	bm.setAnimate(true);
+	bm.setAnimate(false);
 	//bm.solveBFS();
 	bm.solveDFS();
 	System.out.println(bm);
